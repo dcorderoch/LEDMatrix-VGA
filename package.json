@@ -1,0 +1,10 @@
+{
+  "name": "LEDMatrix-VGA",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "child_process": "^1.0.2",
+    "express": "^4.15.3",
+    "morgan": "^1.7.0"
+  }
+}
