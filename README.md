@@ -1,2 +1,2 @@
 # LEDMatrix-VGA
-A web app to display characters in a LED Matrix, using the VGA port. The application requires to develop a driver with the purpose of communicate with the LED Matrix using I2C protocol.
+A web application to display characters in a LED Matrix, using a VGA port. The application requires the development of a driver with the purpose of communicating with the LED Matrix using the I2C protocol.
