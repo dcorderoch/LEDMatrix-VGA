@@ -38,16 +38,10 @@ var apiRoutes = express.Router();
 
 
 // POST method to send a string (POST http://localhost:8080)
-apiRoutes.post('/message/send', function(req, res) {
+apiRoutes.post('/message', function(req, res) {
   //child_p.execSync('call a program');
-
-  res.send(JSON.parse('{}'));
-});
-
-// POST method to send an emoji (POST http://localhost:8080)
-apiRoutes.post('/emoji/send', function(req, res) {
-  //child_p.execSync('call a program');
-  res.send(JSON.parse('{}'));
+  console.log(req.body.message);
+  res.send(JSON.parse('{ok}'));
 });
 
 // connect the api routes underut /api/*
