@@ -41,7 +41,7 @@ var apiRoutes = express.Router();
 apiRoutes.post('/message', function(req, res) {
   //child_p.execSync('call a program');
   console.log(req.body.message);
-  res.send(JSON.parse('{ok}'));
+  res.send(JSON.parse('{}'));
 });
 
 // connect the api routes underut /api/*
