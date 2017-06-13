@@ -10,14 +10,27 @@
 </head>
 <body>
 
-<div class="container-fluid">
-  <h1>Be nice and write something</h1>
+<div class="container-fluid" align="center">
+  <h1>Be nice and write something:</h1>
   <div class="form-group">
-	  <label for="usr">Name:</label>
-	  <input type="text" class="form-control" id="usr">
-	  <input type="submit" class="btn btn-info" value="Submit">
+	  <input type="text" class="form-control" id="something">
+	  <input type="button" class="btn btn-info" value="Submit" onclick="sendMessage()">
   </div>
 </div>
-
+<script>
+	// POST method to send a message
+	function post(url, message) {
+		var request = new XMLHttpRequest();
+		request.open('POST', url, true);
+		request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+		request.send(JSON.stringify({"message": message}));
+	}
+	//This is called when the submit button is clicked.
+	function sendMessage() { 
+		var message = $("#something").val();
+		post("/api/message",message); 
+		$("#something").val('');
+	}
+	</script>
 </body>
 </html>
