@@ -15,6 +15,7 @@ var morgan		= require('morgan');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(morgan('dev')); //This is lo log requests to the console
+app.use('/', express.static(__dirname + '/public'));
 
 
 
@@ -22,10 +23,10 @@ app.use(morgan('dev')); //This is lo log requests to the console
 //Routes
 //******************
 
-// basic Route (GET http://localhost:8080)
-app.get('/', function(req, res) {
-  res.send('Hi! The API is at http://localhost:' + port + '/api');
-});
+// // basic Route (GET http://localhost:8080)
+// app.get('/', function(req, res) {
+//   res.send('Hi! The API is at http://localhost:' + port + '/api');
+// });
  
 // Start the server
 app.listen(port);
