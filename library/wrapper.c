@@ -2,43 +2,22 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-//#include "led_mat_library.h"
+#include "led_mat_library.h"
+#include "text_print.h"
+
 void
 print_string ( int args_count, char ** argv )
 {
-  int start = 2;
-  int end = args_count;
-  int i;
-
-  printf ( "the message was:\n" );
-
-  for ( i = start ; i < end ; i++ )
-    {
-      printf ( "%s ", argv[i] );
-    }
-    print_newline ();
+  print ( args_count, argv );
 }
 
 void
 configure_led_mat ( void )
 {
+  ;
 }
 
-void
-tabbed_print ( char * text, int tab_number )
-{
-  if ( tab_number == 2 )
-    {
-      printf ( "\t" );
-    }
-  printf ( "\t%s", text );
-}
 
-void
-print_newline ( void )
-{
-  printf ( "\n" );
-}
 
 void
 display_help ( char ** argv )
