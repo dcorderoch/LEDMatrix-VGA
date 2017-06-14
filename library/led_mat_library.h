@@ -12,6 +12,6 @@
 #endif /* TEXT_PRINT */
 
 void
-print ( int argc, char ** argv );
+led_mat_print ( int argc, char ** argv );
 
 #endif /* LED_MAT_LIB_H */

@@ -8,7 +8,7 @@
 void
 print_string ( int args_count, char ** argv )
 {
-  print ( args_count, argv );
+  led_mat_print ( args_count, argv );
 }
 
 void

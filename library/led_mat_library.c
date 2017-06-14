@@ -1,7 +1,7 @@
 #include "led_mat_library.h"
 
 void
-print ( int argc, char ** argv )
+led_mat_print ( int argc, char ** argv )
 {
   int start = 2;
   int end = argc;
