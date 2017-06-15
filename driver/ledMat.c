@@ -5,9 +5,9 @@
  */
 #define DEBUG 1
 
-#include <linux/kernel.h>
 #include <linux/init.h>
 #include <linux/module.h>
+#include <linux/kernel.h>
 #include <linux/slab.h>
 #include <linux/i2c.h>
 #include <linux/mutex.h>
@@ -24,24 +24,19 @@
 #define REG_BLINK_SETUP 0x81  
 #define REG_LED 0x00  
 
+void ledMat_exit(void);
+int ledMat_init(void);/* Structure that declares the usual file */
 
-
-//This is used to define the addresses to scan
-static const unsigned short normal_i2c[] = { 0x69, 0x70, I2C_CLIENT_END };
-
-//Driver id table
-static const struct i2c_device_id ledMat_i2c_id[] = {
-    { "ledMat", 0 },
-    {}
-};
-
-MODULE_DEVICE_TABLE(i2c, ledMat_i2c_id);
 
 //Data to be stored by the client
 struct ledMat_data {
 	struct mutex update_lock;
     int someValue;
 };
+
+//Declaration of the init function
+module_init(ledMat_init);
+module_exit(ledMat_exit);
 
 //Variables used by the exposed fileops (write, open, close)
 static struct class * ledMat_i2c_class = NULL;
@@ -50,6 +45,10 @@ static int ledMat_i2c_major;
 
 //Define global i2c_client structure. This is used for fileops.
 static struct i2c_client * ledMat_i2c_client = NULL;
+
+static struct i2c_board_info ledMat_board_info  = {
+    I2C_BOARD_INFO("ledMat", 0x70),
+};
 
 //Mutex to ensure only one process accessing the ledMatrix
 static DEFINE_MUTEX(ledMat_i2c_mutex);
@@ -174,16 +173,24 @@ static void ledMat_init_client(struct i2c_client *client)
     ledMat_write_value(client, REG_BLINK_SETUP, 0xFF);
 }
 
-//Driver callback functions
-//This function is called by the kernel when the device is detected.
-static int ledMat_i2c_probe(struct i2c_client *client,
-    const struct i2c_device_id *id)
-{
-    int retval = 0;
+
+
+int ledMat_init(void) {
+	int retval = 0;
+	struct i2c_adapter * adapter;
+	struct i2c_client * client;
+	adapter = i2c_get_adapter(1);
+
+	if (!i2c_check_functionality(adapter, I2C_FUNC_SMBUS_BYTE_DATA))
+        return -ENODEV;
+
+    client = i2c_new_device(adapter, &ledMat_board_info);
+
     struct device * dev = &client->dev;
     struct ledMat_data *data = NULL;
  
     printk("ledMat_i2c: %s\n", __FUNCTION__);
+
  
     /* Allocate the client's data here */
     data = devm_kzalloc(&client->dev, sizeof(struct ledMat_data), GFP_KERNEL);
@@ -199,7 +206,7 @@ static int ledMat_i2c_probe(struct i2c_client *client,
      * we do it here. For our intents and purposes, we only 
      * set the data->kind which is taken from the i2c_device_id.
      **/
-    data->someValue = id->driver_data;
+    //data->someValue = id->driver_data;
  
     /* initialize our hardware */
     ledMat_init_client(client);
@@ -258,13 +265,14 @@ unreg_chrdev:
     printk("%s: Driver initialization failed!\n", __FUNCTION__);
 out:
     return retval;
+
+
 }
 
-//Function called when the driver or the device is removed
-static int ledMat_i2c_remove(struct i2c_client * client)
+
+void ledMat_exit(void)
 {
-    struct device * dev = &client->dev;
- 
+	struct device * dev = &ledMat_i2c_client->dev;
     printk("ledMat_i2c: %s\n", __FUNCTION__);
  
     ledMat_i2c_client = NULL;
@@ -275,56 +283,7 @@ static int ledMat_i2c_remove(struct i2c_client * client)
     class_unregister(ledMat_i2c_class);
     class_destroy(ledMat_i2c_class);
     unregister_chrdev(ledMat_i2c_major, DRIVER_NAME);
- 
-    return 0;
 }
- 
-//function called by the kernel to detect the ledMat at a given address.
-static int ledMat_i2c_detect(struct i2c_client * client, 
-    struct i2c_board_info * info)
-{
-    struct i2c_adapter *adapter = client->adapter;
-    int address = client->addr;
-    const char * name = NULL;
- 
-    printk("ledMat_i2c: %s!\n", __FUNCTION__);
- 
-    if (!i2c_check_functionality(adapter, I2C_FUNC_SMBUS_BYTE_DATA))
-        return -ENODEV;
- 
-    // Since our address is hardwired to 0x21
-    // we update the name of the driver. This must
-    // match the name of the chip_driver struct below
-    // in order for this driver to be loaded.
-    if (address == 0x70)
-    {
-        name = DRIVER_NAME;
-        dev_info(&adapter->dev,
-            "ledMat device found at 0x%02x\n", address);
-    }else
-        return -ENODEV;
- 
-    /* Upon successful detection, we coup the name of the
-     * driver to the info struct.
-     **/
-    strlcpy(info->type, name, I2C_NAME_SIZE);
-    return 0;
-}
-
-//Main driver description table
-static struct i2c_driver ledMat_driver = {
-    .class      = I2C_CLASS_HWMON,
-    .driver = {
-            .name = DRIVER_NAME,
-    },
-    .probe          = ledMat_i2c_probe,
-    .remove         = ledMat_i2c_remove,
-    .id_table       = ledMat_i2c_id,
-    .detect      = ledMat_i2c_detect,
-    .address_list   = normal_i2c,
-};
-
-module_i2c_driver(ledMat_driver);
 
 MODULE_DESCRIPTION("8x8 LED Matrix I2C Driver");
 MODULE_LICENSE("Dual BSD/GPL");/* License */
