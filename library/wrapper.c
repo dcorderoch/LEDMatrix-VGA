@@ -2,9 +2,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#include "led_mat_library.h"
-#include "text_print.h"
-
 void
 print_string ( int args_count, char ** argv )
 {
@@ -49,6 +46,7 @@ display_help ( char ** argv )
 int
 main ( int argc, char ** argv )
 {
+  led_mat_led_array_on ( 0, 0 );
   if(argc>1 && argv[1][0] == '-')
     {
       switch (argv[1][1])
