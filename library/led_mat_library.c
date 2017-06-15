@@ -21,11 +21,11 @@ display_symbol ( uint8_t * symbol_data )
     }
 
   uint8_t reg = LED_MAT_PRIME_REG;
-  buf[0] = reg;
 
   int i;
   for ( i = 0 ; i < SYMBOL_LENGTH ; ++i )
   {
+    buf[0] = 1 << i;
     buf[1] = symbol_data[i];
 
     if ( write ( led_mat_fd, buf, 2 ) != 2 )
