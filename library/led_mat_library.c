@@ -1,88 +1,100 @@
 #include "led_mat_library.h"
 
 void
-display_symbol ( uint8_t * symbol_data )
+wait ( unsigned long milliseconds )
 {
-  int led_mat_fd;
-  char led_mat_filename[40];
-  uint8_t buf[2];
+  unsigned long millisecs = milliseconds;
+  struct timespec req = { 0 };
+  time_t sec = (int)(millisecs / 1000);
+  millisecs = millisecs - (sec * 1000);
+  req.tv_sec = sec;
+  req.tv_nsec = millisecs * 1000000L;
+  nanosleep ( &req, &req );
+}
 
-  /*sprintf ( led_mat_filename, "/sys/bus/i2c/drivers/ledMatc/1-0070/mat_led" );*/
-  sprintf ( led_mat_filename, "/dev/i2c-1" );
-  if ( (led_mat_fd = open ( led_mat_filename, O_RDWR )) < 0 )
-    {
-      printf ( "Failed to open the bus.\n" );
-      exit ( EXIT_FAILURE );
-    }
-  if ( ioctl (led_mat_fd, I2C_SLAVE, LED_MAT_ADDRESS ) < 0 )
+void
+write_byte ( int * dev_fd, uint8_t dev_register, uint8_t data )
+{
+  uint8_t buf[WRITE_BUFFER_SIZE] = { dev_register, data };
+
+  if ( write ( dev_fd, buf, WRITE_BUFFER_SIZE ) != WRITE_BUFFER_SIZE )
     {
       printf ( "Failed to acquire bus access and/or talk to slave.\n" );
       exit ( EXIT_FAILURE );
     }
+}
 
-  uint8_t reg = LED_MAT_PRIME_REG;
+void
+set_blink_off ( void )
+{
+  int dev_fd = 0;
+  open_device ( &dev_fd );
+  set_device_as_slave ( &dev_fd );
+  uint8_t blink_disable = 0xff; /* All bits on to disable. */
+  write_byte ( &dev_fd, LED_BLINK_REG, blink_disable );
+  wait ( 2000 );
+  close_device ( &dev_fd );
+}
 
-  int i;
-  for ( i = 0 ; i < SYMBOL_LENGTH ; ++i )
-  {
-    buf[0] = 1 << i;
-    buf[1] = symbol_data[i];
+void
+open_device ( int * dev_fd )
+{
+  int led_mat_fd = 0;
+  if ( (led_mat_fd = open ( FILENAME, O_WRONLY | O_RSYNC )) < 0 )
+    {
+      printf ( "Failed to open the bus.\n" );
+      exit ( EXIT_FAILURE );
+    }
+  *dev_fd = led_mat_fd;
+}
 
-    if ( write ( led_mat_fd, buf, 2 ) != 2 )
-      {
-        printf ( "Failed to acquire bus access and/or talk to slave.\n" );
-        exit ( EXIT_FAILURE );
-      }
-  }
-
-  if ( (close ( led_mat_fd )) < 0 )
+void
+close_device ( int * dev_fd )
+{
+  if ( (close ( *dev_fd )) < 0 )
     {
       printf ( "Failed to close the bus.\n" );
       exit ( EXIT_FAILURE );
     }
+}
+
+void
+set_device_as_slave ( int * dev_fd )
+{
+  if ( ioctl ( *dev_fd, I2C_SLAVE, LED_MAT_ADDRESS ) < 0 )
+    {
+      printf ( "Failed to acquire bus access and/or talk to slave.\n" );
+      exit ( EXIT_FAILURE );
+    }
+}
+
+void
+display_symbol ( uint8_t * symbol_data, uint8_t length )
+{
+  int led_mat_fd;
+  char led_mat_filename[40];
+
+  sprintf ( led_mat_filename, FILENAME );
+
+  open_device ( &led_mat_fd );
+
+  set_device_as_slave ( &led_mat_fd );
+
+  int i;
+  for ( i = 0 ; i < SYMBOL_LENGTH ; i++ )
+  {
+    write_byte ( &led_mat_fd, i ? 1 << i : LED_MAT_PRIME_REG, symbol_data[i] );
+    wait ( 2000 );
+  }
+
+  wait ( 2000 );
+  close_device ( &led_mat_fd );
 }
 
 void
 print_a ( void )
 {
-  display_symbol ( A );
-}
-
-void
-led_mat_led_array_on ( uint8_t * array_state, uint8_t length )
-{
-  int led_mat_fd;
-  char led_mat_filename[40];
-  uint8_t buf[10];
-
-  /*sprintf ( led_mat_filename, "/sys/bus/i2c/drivers/ledMatc/1-0070/mat_led" );*/
-  sprintf ( led_mat_filename, "/dev/i2c-1" );
-  if ( (led_mat_fd = open ( led_mat_filename, O_RDWR )) < 0 )
-    {
-      printf ( "Failed to open the bus.\n" );
-      exit ( EXIT_FAILURE );
-    }
-  if ( ioctl (led_mat_fd, I2C_SLAVE, LED_MAT_ADDRESS ) < 0 )
-    {
-      printf ( "Failed to acquire bus access and/or talk to slave.\n" );
-      exit ( EXIT_FAILURE );
-    }
-
-  uint8_t reg = 0x00;
-  buf[0] = reg;
-  buf[1] = 0xff;
-
-  if ( write ( led_mat_fd, buf, 2 ) != 2 )
-    {
-      printf ( "Failed to acquire bus access and/or talk to slave.\n" );
-      exit ( EXIT_FAILURE );
-    }
-
-  if ( (close ( led_mat_fd )) < 0 )
-    {
-      printf ( "Failed to close the bus.\n" );
-      exit ( EXIT_FAILURE );
-    }
+  display_symbol ( A, SYMBOL_LENGTH );
 }
 
 void
@@ -98,5 +110,5 @@ led_mat_print ( int argc, char ** argv )
     {
       printf ( "%s ", argv[i] );
     }
-    print_newline ();
+  print_newline ();
 }
