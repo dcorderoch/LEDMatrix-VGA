@@ -46,7 +46,7 @@ display_help ( char ** argv )
 int
 main ( int argc, char ** argv )
 {
-  led_mat_led_array_on ( 0, 0 );
+  print_a ();
   if(argc>1 && argv[1][0] == '-')
     {
       switch (argv[1][1])
