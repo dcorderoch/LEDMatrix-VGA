@@ -105,6 +105,13 @@ set_device_as_slave ( int * dev_fd );
 void
 display_symbol ( uint8_t * symbol_data, uint8_t length );
 
+/* Turn all LEDs off. */
+void
+clear_led_mat ( void );
+
+void
+print_test ( void );
+
 /* Print 'a' on the LED Matrix. */
 void
 print_a ( void );
