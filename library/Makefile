@@ -15,12 +15,13 @@ CC := gcc
 # you can take this Makefile as a template
 # just change -W and -Wall for -O{N}
 # where N is the number for optimization you want
-CCFLAGS := -W -Wall -O2
+CCFLAGS := -W -Wall `pkg-config --cflags glib-2.0` -O2
+LDLIBS := -lglib-2.0
 
 all : $(EXE)
 
 $(EXE) : $(OBJ)
-	$(CC) $(OBJ) -o $(EXE) $(CCFLAGS)
+	$(CC) $(OBJ) -o $(EXE) $(CCFLAGS) $(LDLIBS)
 $(ODIR)/%.o : $(SDIR)/%.c
 	$(CC) -c -o $@ $< $(CCFLAGS)
 .PHONY : clean
