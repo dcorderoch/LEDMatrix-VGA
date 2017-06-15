@@ -169,8 +169,6 @@ static DEVICE_ATTR(mat_led, 0660, NULL, set_mat_led);
 static void ledMat_init_client(struct i2c_client *client)
 {
     dev_info(&client->dev, "%s\n", __FUNCTION__);
- 
-    ledMat_write_value(client, REG_BLINK_SETUP, 0xFF);
 }
 
 
@@ -253,6 +251,8 @@ int ledMat_init(void) {
  
     // We now register our sysfs attributs. 
     device_create_file(dev, &dev_attr_mat_led);
+
+    ledMat_write_value(client, REG_BLINK_SETUP, 0xFF);
  
     return 0;
     /* Cleanup on failed operations */
