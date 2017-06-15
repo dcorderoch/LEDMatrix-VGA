@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include "led_mat_library.h"
 
 void
 print_string ( int args_count, char ** argv )

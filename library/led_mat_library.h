@@ -1,5 +1,5 @@
-#ifndef LED_MAT_LIB_H
-#define LED_MAT_LIB_H
+#ifndef LED_MAT_LIBRARY_H
+#define LED_MAT_LIBRARY_H
 
 #ifndef STDIO
 #define STDIO
@@ -81,48 +81,6 @@
 #include "text_print.h"
 #endif /* TEXT_PRINT */
 
-#ifndef DEV_FILENAME
-#define DEV_FILENAME "/sys/bus/i2c/drivers/ledMatc/1-0070/mat_led"
-#endif /* DEV_FILENAME */
-
-#ifndef FILENAME
-#define FILENAME "/dev/i2c-1"
-#endif /* FILENAME */
-
-#ifndef LED_MAT_ADDRESS
-#define LED_MAT_ADDRESS 0x70
-#endif /* LED_MAT_ADDRESS */
-
-#ifndef LED_MAT_PRIME_REG
-#define LED_MAT_PRIME_REG 0x00
-#endif /* LED_MAT_PRIME_REG */
-
-#ifndef LED_BLINK_REG
-#define LED_BLINK_REG 0x81
-#endif /* LED_BLINK_REG */
-
-#ifndef SYMBOL_LENGTH
-#define SYMBOL_LENGTH 8
-#endif /* SYMBOL_LENGTH */
-
-#ifndef WRITE_BUFFER_SIZE
-#define WRITE_BUFFER_SIZE 2
-#endif /* BYTE_WRITE_BUFFER_SIZE */
-
-#ifndef A_CHAR
-#define A_CHAR
-uint8_t A[8] =
-  {
-    0B00000000,
-    0B00001100,
-    0B00011110,
-    0B00110011,
-    0B00110011,
-    0B00111111,
-    0B00110011,
-    0B00110011
-  };
-#endif /* A_CHAR */
 
 /* Wait a specified amount of milliseconds. */
 void
@@ -145,7 +103,7 @@ set_device_as_slave ( int * dev_fd );
 
 /* Display a symbol on the LED Matrix. */
 void
-display_symbol ( uint8_t * symbol_data );
+display_symbol ( uint8_t * symbol_data, uint8_t length );
 
 /* Print 'a' on the LED Matrix. */
 void
@@ -160,4 +118,4 @@ led_mat_led_array_on ( uint8_t * array_state, uint8_t length );
 void
 led_mat_print ( int argc, char ** argv );
 
-#endif /* LED_MAT_LIB_H */
+#endif /* LED_MAT_LIBRARY_H */

@@ -1,5 +1,48 @@
 #include "led_mat_library.h"
 
+#ifndef DEV_FILENAME
+#define DEV_FILENAME "/sys/bus/i2c/drivers/ledMatc/1-0070/mat_led"
+#endif /* DEV_FILENAME */
+
+#ifndef FILENAME
+#define FILENAME "/dev/i2c-1"
+#endif /* FILENAME */
+
+#ifndef LED_MAT_ADDRESS
+#define LED_MAT_ADDRESS 0x70
+#endif /* LED_MAT_ADDRESS */
+
+#ifndef LED_MAT_PRIME_REG
+#define LED_MAT_PRIME_REG 0x00
+#endif /* LED_MAT_PRIME_REG */
+
+#ifndef LED_BLINK_REG
+#define LED_BLINK_REG 0x81
+#endif /* LED_BLINK_REG */
+
+#ifndef SYMBOL_LENGTH
+#define SYMBOL_LENGTH 8
+#endif /* SYMBOL_LENGTH */
+
+#ifndef WRITE_BUFFER_SIZE
+#define WRITE_BUFFER_SIZE 2
+#endif /* BYTE_WRITE_BUFFER_SIZE */
+
+#ifndef A_CHAR
+#define A_CHAR
+uint8_t A[8] =
+  {
+    0B00000000,
+    0B00001100,
+    0B00011110,
+    0B00110011,
+    0B00110011,
+    0B00111111,
+    0B00110011,
+    0B00110011
+  };
+#endif /* A_CHAR */
+
 void
 wait ( unsigned long milliseconds )
 {
@@ -17,7 +60,7 @@ write_byte ( int * dev_fd, uint8_t dev_register, uint8_t data )
 {
   uint8_t buf[WRITE_BUFFER_SIZE] = { dev_register, data };
 
-  if ( write ( dev_fd, buf, WRITE_BUFFER_SIZE ) != WRITE_BUFFER_SIZE )
+  if ( write ( *dev_fd, buf, WRITE_BUFFER_SIZE ) != WRITE_BUFFER_SIZE )
     {
       printf ( "Failed to acquire bus access and/or talk to slave.\n" );
       exit ( EXIT_FAILURE );
@@ -81,9 +124,12 @@ display_symbol ( uint8_t * symbol_data, uint8_t length )
   set_device_as_slave ( &led_mat_fd );
 
   int i;
-  for ( i = 0 ; i < SYMBOL_LENGTH ; i++ )
+  for ( i = 0 ; i < length ; i++ )
   {
-    write_byte ( &led_mat_fd, i ? 1 << i : LED_MAT_PRIME_REG, symbol_data[i] );
+    printf ( "iteration:%d\n", i );
+    uint8_t value = i ? 1 << i : LED_MAT_PRIME_REG;
+    printf ( "value:%d\n", value );
+    write_byte ( &led_mat_fd, value, symbol_data[i] );
     wait ( 2000 );
   }
 
