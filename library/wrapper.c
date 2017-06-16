@@ -10,25 +10,16 @@ print_string ( int args_count, char ** argv )
 }
 
 void
-configure_led_mat ( void )
-{
-  ;
-}
-
-
-
-void
 display_help ( char ** argv )
 {
   printf ( "At least one option must be selected\n" );
   printf ( "correct usage\n" );
   tabbed_print ( argv[0], 1 );
-  printf ( "(-h|-c|-c <MESSAGE>)\n" );
+  printf ( "(-h|-p <MESSAGE>)\n" );
 
   print_newline ();
 
   tabbed_print ( "OPTIONS:\n", 1 );
-  tabbed_print ( "'-c' to configure the device\n", 1 );
   tabbed_print ( "'-p' to print a string on the device\n", 1 );
   tabbed_print ( "'-h' to display this help\n", 1 );
 
@@ -47,16 +38,12 @@ display_help ( char ** argv )
 int
 main ( int argc, char ** argv )
 {
-  print_test ();
   if ( (argc > 1) && (argv[1][0] == '-') )
     {
       switch (argv[1][1])
         {
           case 'p':
             print_string ( argc, argv );
-            break;
-          case 'c':
-            configure_led_mat ();
             break;
           case 'h':
           default:
