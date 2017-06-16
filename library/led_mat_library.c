@@ -30,7 +30,7 @@
 
 #ifndef CLEAR
 #define CLEAR
-uint8_t CLEAR_LEDS[8] =
+uint8_t CLEAR_LEDS[SYMBOL_LENGTH] =
 {
   0B00000000,
   0B00000000,
@@ -45,7 +45,7 @@ uint8_t CLEAR_LEDS[8] =
 
 #ifndef A_CHAR
 #define A_CHAR
-uint8_t A[8] =
+uint8_t A[SYMBOL_LENGTH] =
 {
   0B00000000,
   0B00001100,
@@ -60,7 +60,7 @@ uint8_t A[8] =
 
 #ifndef B_CHAR
 #define B_CHAR
-uint8_t B[8] =
+uint8_t B[SYMBOL_LENGTH] =
 {
   0B00000000,
   0B00111111,
@@ -75,7 +75,7 @@ uint8_t B[8] =
 
 #ifndef C_CHAR
 #define C_CHAR
-uint8_t C[8] =
+uint8_t C[SYMBOL_LENGTH] =
 {
   0B00000000,
   0B00111100,
@@ -88,13 +88,365 @@ uint8_t C[8] =
 };
 #endif /* C_CHAR */
 
+#ifndef D_CHAR
+#define D_CHAR
+uint8_t D[SYMBOL_LENGTH] =
+{
+  0B00000000,
+  0B00011111,
+  0B00110110,
+  0B01100110,
+  0B01100110,
+  0B01100110,
+  0B00110110,
+  0B00011111
+};
+#endif /* D_CHAR */
+
+#ifndef E_CHAR
+#define E_CHAR
+uint8_t E[SYMBOL_LENGTH] =
+{
+  0B00000000, 
+  0B01111111, 
+  0B01000110, 
+  0B00010110, 
+  0B00011110, 
+  0B00010110, 
+  0B01000110, 
+  0B01111111  
+};
+#endif /* E_CHAR */
+
+#ifndef F_CHAR
+#define F_CHAR
+uint8_t F[SYMBOL_LENGTH] =
+{
+  0B00000000, 
+  0B01111111, 
+  0B01000110, 
+  0B00010110, 
+  0B00011110, 
+  0B00010110, 
+  0B00000110, 
+  0B00001111 
+};
+#endif /* F_CHAR */
+
+#ifndef G_CHAR
+#define G_CHAR
+uint8_t G[SYMBOL_LENGTH] =
+{
+  0B00000000, 
+  0B00111100, 
+  0B01100110, 
+  0B00000011, 
+  0B00000011, 
+  0B01110011, 
+  0B01100110, 
+  0B01111100
+};
+#endif /* G_CHAR */
+
+#ifndef H_CHAR
+#define H_CHAR
+uint8_t H{SYMBOL_LENGTH] =
+{
+  0B00000000, 
+  0B00110011, 
+  0B00110011, 
+  0B00110011, 
+  0B00111111, 
+  0B00110011, 
+  0B00110011, 
+  0B00110011
+};
+#endif /* H_CHAR */
+
+#ifndef I_CHAR
+#define I_CHAR
+uint8_t I[SYMBOL_LENGTH] =
+{
+  0B00000000, 
+  0B00011110, 
+  0B00001100, 
+  0B00001100, 
+  0B00001100, 
+  0B00001100, 
+  0B00001100, 
+  0B00011110 
+};
+#endif /* I_CHAR */
+
+#ifndef J_CHAR
+#define J_CHAR
+uint8_t J[SYMBOL_LENGTH] =
+{
+  0B00000000, 
+  0B11110000, 
+  0B01100000, 
+  0B01100000, 
+  0B01100000, 
+  0B01100110, 
+  0B01100110, 
+  0B00111100 
+};
+#endif /* J_CHAR */
+
+#ifndef K_CHAR
+#define K_CHAR
+uint8_t K[SYMBOL_LENGTH] =
+{
+  0B00000000, 
+  0B11001110, 
+  0B11001100, 
+  0B01101100, 
+  0B00111100, 
+  0B01101100, 
+  0B11001100, 
+  0B11001110 
+};
+#endif /* K_CHAR */
+
+#ifndef L_CHAR
+#define L_CHAR
+uint8_t L[SYMBOL_LENGTH] =
+{
+  0B00000000, 
+  0B00001111, 
+  0B00000110, 
+  0B00000110, 
+  0B00000110, 
+  0B01000110, 
+  0B01100110, 
+  0B01111111 
+};
+#endif /* L_CHAR */
+
+#ifndef M_CHAR
+#define M_CHAR
+uint8_t M[SYMBOL_LENGTH] =
+{
+  0B00000000, 
+  0B11000110, 
+  0B11101110, 
+  0B11111110, 
+  0B11111110, 
+  0B11010110, 
+  0B11000110, 
+  0B11000110 
+};
+#endif /* M_CHAR */
+
+#ifndef N_CHAR
+#define N_CHAR
+uint8_t N[SYMBOL_LENGTH] =
+{
+  0B00000000, 
+  0B11000110, 
+  0B11001110, 
+  0B11011110, 
+  0B11110110, 
+  0B11100110, 
+  0B11000110, 
+  0B11000110 
+};
+#endif /* N_CHAR */
+
+#ifndef O_CHAR
+#define O_CHAR
+uint8_t O[SYMBOL_LENGTH] =
+{
+  0B00000000, 
+  0B00111000, 
+  0B01101100, 
+  0B11000110, 
+  0B11000110, 
+  0B11000110, 
+  0B01101100, 
+  0B00111000 
+};
+#endif /* O_CHAR */
+
+#ifndef P_CHAR
+#define P_CHAR
+uint8_t P[SYMBOL_LENGTH] =
+{
+  0B00000000, 
+  0B01111110, 
+  0B11001100, 
+  0B11001100, 
+  0B01111100, 
+  0B00001100, 
+  0B00001100, 
+  0B00011110 
+};
+#endif /* P_CHAR */
+
+#ifndef Q_CHAR
+#define Q_CHAR
+uint8_t Q[SYMBOL_LENGTH] =
+{
+  0B00000000, 
+  0B01111000, 
+  0B11001100, 
+  0B11001100, 
+  0B11001100, 
+  0B11101100, 
+  0B01111000, 
+  0B11100000 
+};
+#endif /* Q_CHAR */
+
+#ifndef R_CHAR
+#define R_CHAR
+uint8_t R[SYMBOL_LENGTH] =
+{
+  0B00000000, 
+  0B00111111, 
+  0B01100110, 
+  0B01100110, 
+  0B00111110, 
+  0B00110110, 
+  0B01100110, 
+  0B11100111 
+};
+#endif /* R_CHAR */
+
+#ifndef S_CHAR
+#define S_CHAR
+uint8_t S[S_CHAR uint8_t
+{
+  0B00000000, 
+  0B00111100, 
+  0B01100110, 
+  0B00001110, 
+  0B00011100, 
+  0B01110000, 
+  0B01100110, 
+  0B00111100 
+};
+#endif /* S_CHAR */
+
+#ifndef T_CHAR
+#define T_CHAR
+uint8_t T[SYMBOL_LENGTH] =
+{
+  0B00000000, 
+  0B01111110, 
+  0B01011010, 
+  0B00011000, 
+  0B00011000, 
+  0B00011000, 
+  0B00011000, 
+  0B00111100 
+};
+#endif /* T_CHAR */
+
+#ifndef U_CHAR
+#define U_CHAR
+uint8_t U[SYMBOL_LENGTH] =
+{
+  0B00000000, 
+  0B01100110, 
+  0B01100110, 
+  0B01100110, 
+  0B01100110, 
+  0B01100110, 
+  0B01111110, 
+  0B01111100 
+};
+#endif /* U_CHAR */
+
+#ifndef V_CHAR
+#define V_CHAR
+uint8_t V[SYMBOL_LENGTH] =
+{
+  0B00000000, 
+  0B01100110, 
+  0B01100110, 
+  0B01100110, 
+  0B01100110, 
+  0B01100110, 
+  0B00111100, 
+  0B00011000 
+};
+#endif /* V_CHAR */
+
+#ifndef W_CHAR
+#define W_CHAR
+uint8_t W[SYMBOL_LENGTH] =
+{
+  0B00000000, 
+  0B11000110, 
+  0B11000110, 
+  0B11000110, 
+  0B11010110, 
+  0B11111110, 
+  0B11101110, 
+  0B11000110 
+};
+#endif /* W_CHAR */
+
+#ifndef X_CHAR
+#define X_CHAR
+uint8_t X[SYMBOL_LENGTH] =
+{
+  0B11000110, 
+  0B11000110, 
+  0B01101100, 
+  0B00111000, 
+  0B00111000, 
+  0B01101100, 
+  0B11000110, 
+  0B11000110 
+};
+#endif /* X_CHAR */
+
+#ifndef Y_CHAR
+#define Y_CHAR
+uint8_t Y[SYMBOL_LENGTH] =
+{
+  0B00000000, 
+  0B11100111, 
+  0B01100110, 
+  0B01100110, 
+  0B00111100, 
+  0B00011000, 
+  0B00011000, 
+  0B00111100 
+};
+#endif /* Y_CHAR */
+
+#ifndef Z_CHAR
+#define Z_CHAR
+uint8_t Z[SYMBOL_LENGTH] =
+{
+  B00000000,
+  B01111111,
+  B01100011,
+  B01000110,
+  B00001100,
+  B00011001,
+  B00110011,
+  B01111111
+};
+#endif /* Z_CHAR */
+
+#ifndef CHAR_SET_LENGTH
+#define CHAR_SET_LENGTH 46
+#endif /* CHAR_SET_LENGTH */
+
 #ifndef CHARACTERS
 #define CHARACTERS
-uint8_t * CHARS[3] =
+uint8_t * CHARS[CHAR_SET_LENGTH] =
 {
-  A,
-  B,
-  C
+  A, B, C, D, E, F, G, H, I ,J, K, L, M,
+  N, O, P, Q, R, S, T, U, V, W, X, Y, Z,
+  ONE, TWO, THREE, FOUR, FIVE,
+  SIX, SEVEN, EIGHT, NINE, TEN,
+  SMILE, FROWN, SERIOUS, HEART, ARROW,
+  DOLLAR, NOTE, MARS, VENUS, NOMOUTH
 };
 #endif /* CHARACTERS */
 
@@ -151,7 +503,7 @@ void
 open_device ( int * dev_fd )
 {
   int led_mat_fd = 0;
-  if ( (led_mat_fd = open ( FILENAME, O_WRONLY )) < 0 )
+  if ( (led_mat_fd = open ( DEV_FILENAME, O_WRONLY )) < 0 )
     {
       printf ( "Failed to open the bus.\n" );
       exit ( EXIT_FAILURE );
@@ -188,12 +540,12 @@ display_symbol ( uint8_t * symbol_data, uint8_t length )
   int i;
   for ( i = 0 ; i < length ; i++ )
   {
-    uint8_t value = i ? i * 2 : LED_MAT_PRIME_REG;
+    uint8_t reg = i ? i * 2 : LED_MAT_PRIME_REG;
     uint8_t data = symbol_data[i];
 
     open_device ( &led_mat_fd );
     set_device_as_slave ( &led_mat_fd );
-    write_byte ( &led_mat_fd, value, data );
+    write_byte ( &led_mat_fd, reg, data );
     close_device ( &led_mat_fd );
 
 
