@@ -22,7 +22,14 @@
 
 // Registers
 #define REG_BLINK_SETUP 0x81  
-#define REG_LED 0x00  
+#define REG_LED_0 0x00  
+#define REG_LED_1 0x02
+#define REG_LED_2 0x04
+#define REG_LED_3 0x06
+#define REG_LED_4 0x08
+#define REG_LED_5 0x0a
+#define REG_LED_6 0x0c
+#define REG_LED_7 0x0d    
 
 void ledMat_exit(void);
 int ledMat_init(void);/* Structure that declares the usual file */
@@ -138,7 +145,7 @@ static const struct file_operations ledMat_i2c_fops = {
 };
 
 //attribute exported via sysfs. 
-static ssize_t set_mat_led(struct device *dev, 
+static ssize_t set_mat_led0(struct device *dev, 
     struct device_attribute * devattr,
     const char * buf, 
     size_t count)
@@ -156,13 +163,181 @@ static ssize_t set_mat_led(struct device *dev,
         __FUNCTION__,
         value);
  
-    ledMat_write_value(client, REG_LED, (u16) value);
+    ledMat_write_value(client, REG_LED_0, (u16) value);
+ 
+    return count;
+}
+
+static ssize_t set_mat_led1(struct device *dev, 
+    struct device_attribute * devattr,
+    const char * buf, 
+    size_t count)
+{
+    struct i2c_client * client = to_i2c_client(dev);
+    int value, err;
+ 
+    dev_dbg(&client->dev, "%s\n", __FUNCTION__);
+ 
+    err = kstrtoint(buf, 10, &value);
+    if (err < 0)
+        return err;
+ 
+    dev_dbg(&client->dev, "%s: write to i2c with val %d\n", 
+        __FUNCTION__,
+        value);
+ 
+    ledMat_write_value(client, REG_LED_1, (u16) value);
+ 
+    return count;
+}
+
+static ssize_t set_mat_led2(struct device *dev, 
+    struct device_attribute * devattr,
+    const char * buf, 
+    size_t count)
+{
+    struct i2c_client * client = to_i2c_client(dev);
+    int value, err;
+ 
+    dev_dbg(&client->dev, "%s\n", __FUNCTION__);
+ 
+    err = kstrtoint(buf, 10, &value);
+    if (err < 0)
+        return err;
+ 
+    dev_dbg(&client->dev, "%s: write to i2c with val %d\n", 
+        __FUNCTION__,
+        value);
+ 
+    ledMat_write_value(client, REG_LED_2, (u16) value);
+ 
+    return count;
+}
+
+static ssize_t set_mat_led3(struct device *dev, 
+    struct device_attribute * devattr,
+    const char * buf, 
+    size_t count)
+{
+    struct i2c_client * client = to_i2c_client(dev);
+    int value, err;
+ 
+    dev_dbg(&client->dev, "%s\n", __FUNCTION__);
+ 
+    err = kstrtoint(buf, 10, &value);
+    if (err < 0)
+        return err;
+ 
+    dev_dbg(&client->dev, "%s: write to i2c with val %d\n", 
+        __FUNCTION__,
+        value);
+ 
+    ledMat_write_value(client, REG_LED_3, (u16) value);
+ 
+    return count;
+}
+
+static ssize_t set_mat_led4(struct device *dev, 
+    struct device_attribute * devattr,
+    const char * buf, 
+    size_t count)
+{
+    struct i2c_client * client = to_i2c_client(dev);
+    int value, err;
+ 
+    dev_dbg(&client->dev, "%s\n", __FUNCTION__);
+ 
+    err = kstrtoint(buf, 10, &value);
+    if (err < 0)
+        return err;
+ 
+    dev_dbg(&client->dev, "%s: write to i2c with val %d\n", 
+        __FUNCTION__,
+        value);
+ 
+    ledMat_write_value(client, REG_LED_4, (u16) value);
+ 
+    return count;
+}
+
+static ssize_t set_mat_led5(struct device *dev, 
+    struct device_attribute * devattr,
+    const char * buf, 
+    size_t count)
+{
+    struct i2c_client * client = to_i2c_client(dev);
+    int value, err;
+ 
+    dev_dbg(&client->dev, "%s\n", __FUNCTION__);
+ 
+    err = kstrtoint(buf, 10, &value);
+    if (err < 0)
+        return err;
+ 
+    dev_dbg(&client->dev, "%s: write to i2c with val %d\n", 
+        __FUNCTION__,
+        value);
+ 
+    ledMat_write_value(client, REG_LED_5, (u16) value);
+ 
+    return count;
+}
+
+static ssize_t set_mat_led6(struct device *dev, 
+    struct device_attribute * devattr,
+    const char * buf, 
+    size_t count)
+{
+    struct i2c_client * client = to_i2c_client(dev);
+    int value, err;
+ 
+    dev_dbg(&client->dev, "%s\n", __FUNCTION__);
+ 
+    err = kstrtoint(buf, 10, &value);
+    if (err < 0)
+        return err;
+ 
+    dev_dbg(&client->dev, "%s: write to i2c with val %d\n", 
+        __FUNCTION__,
+        value);
+ 
+    ledMat_write_value(client, REG_LED_6, (u16) value);
+ 
+    return count;
+}
+
+static ssize_t set_mat_led7(struct device *dev, 
+    struct device_attribute * devattr,
+    const char * buf, 
+    size_t count)
+{
+    struct i2c_client * client = to_i2c_client(dev);
+    int value, err;
+ 
+    dev_dbg(&client->dev, "%s\n", __FUNCTION__);
+ 
+    err = kstrtoint(buf, 10, &value);
+    if (err < 0)
+        return err;
+ 
+    dev_dbg(&client->dev, "%s: write to i2c with val %d\n", 
+        __FUNCTION__,
+        value);
+ 
+    ledMat_write_value(client, REG_LED_7, (u16) value);
  
     return count;
 }
 
 // mat led is write only
-static DEVICE_ATTR(mat_led, 0660, NULL, set_mat_led);
+static DEVICE_ATTR(mat_led0, 0660, NULL, set_mat_led0);
+static DEVICE_ATTR(mat_led1, 0660, NULL, set_mat_led1);
+static DEVICE_ATTR(mat_led2, 0660, NULL, set_mat_led2);
+static DEVICE_ATTR(mat_led3, 0660, NULL, set_mat_led3);
+static DEVICE_ATTR(mat_led4, 0660, NULL, set_mat_led4);
+static DEVICE_ATTR(mat_led5, 0660, NULL, set_mat_led5);
+static DEVICE_ATTR(mat_led6, 0660, NULL, set_mat_led6);
+static DEVICE_ATTR(mat_led7, 0660, NULL, set_mat_led7);
 
 
 //Init function to initialize the driver
