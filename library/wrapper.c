@@ -48,7 +48,7 @@ int
 main ( int argc, char ** argv )
 {
   print_test ();
-  if(argc>1 && argv[1][0] == '-')
+  if ( (argc > 1) && (argv[1][0] == '-') )
     {
       switch (argv[1][1])
         {

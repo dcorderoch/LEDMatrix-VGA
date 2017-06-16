@@ -46,7 +46,7 @@ char REG_7[F_NAME_LEN] = "/sys/bus/i2c/devices/1-0070/mat_led7";
 
 #ifndef DEV_FILENAMES
 #define DEV_FILENAMES
-char * FILENAMES[44] =
+char * FILENAMES[F_NAME_LEN] =
 {
   REG_0, REG_1, REG_2, REG_3, REG_4, REG_5, REG_6, REG_7
 };
@@ -246,13 +246,13 @@ uint8_t J[SYMBOL_LENGTH] =
 uint8_t K[SYMBOL_LENGTH] =
 {
   0B00000000,
-  0B10110011,
+  0B11110011,
   0B00110011,
   0B00011011,
   0B00001111,
   0B00011011,
   0B00110011,
-  0B10110011
+  0B11110011
 };
 #endif /* K_CHAR */
 
@@ -903,7 +903,7 @@ led_mat_print ( int argc, char ** argv )
 {
   int start = 2;
   int end = argc;
-  int i;
+  int i, j;
 
   printf ( "the message was:\n" );
 
@@ -912,6 +912,22 @@ led_mat_print ( int argc, char ** argv )
       printf ( "%s ", argv[i] );
     }
   print_newline ();
+
+  if ( argc
+  int word_len;
+  for ( i = start ; i < end ; i++ )
+    {
+      word_len = strlen ( argv[i] );
+      for ( j = 0 ; j < word_len ; j++ )
+        {
+          uint8_t letter = argv[i][j];
+          printf ( "the letter of word number %d\n", i+1 );
+          printf ( "at position %d in the word is:%c\n", j+1, letter );
+          display_symbol ( CHARS[ 'a' - letter], SYMBOL_LENGTH );
+        }
+      wait ( 500 );
+    }
+
 }
 
 void
