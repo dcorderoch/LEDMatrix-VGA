@@ -823,7 +823,7 @@ void
 open_device ( FILE ** dev_fd, char * filename )
 {
   FILE * led_mat_fd = 0;
-  if ( (led_mat_fd = fopen ( filename, "w" )) < 0 )
+  if ( (led_mat_fd = fopen ( filename, "w" )) != 0 )
     {
       printf ( "Failed to open the bus.\n" );
       exit ( EXIT_FAILURE );
