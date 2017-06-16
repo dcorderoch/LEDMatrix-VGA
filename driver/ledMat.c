@@ -129,7 +129,7 @@ static ssize_t ledMat_i2c_write(struct file * fp, const char __user * buf,
  
     printk("%s: Write operation with [%d] bytes\n", __FUNCTION__, count);
     for (x = 0; x < count; x++)
-        if (ledMat_write_value(ledMat_i2c_client, REG_LED, (u16) tmp[x]) == 0)
+        if (ledMat_write_value(ledMat_i2c_client, REG_LED_0, (u16) tmp[x]) == 0)
             numwrite++;
  
     return numwrite;
@@ -425,7 +425,14 @@ int ledMat_init(void) {
  
  
     // We now register our sysfs attributs. 
-    device_create_file(dev, &dev_attr_mat_led);
+    device_create_file(dev, &dev_attr_mat_led0);
+    device_create_file(dev, &dev_attr_mat_led1);
+    device_create_file(dev, &dev_attr_mat_led2);
+    device_create_file(dev, &dev_attr_mat_led3);
+    device_create_file(dev, &dev_attr_mat_led4);
+    device_create_file(dev, &dev_attr_mat_led5);
+    device_create_file(dev, &dev_attr_mat_led6);
+    device_create_file(dev, &dev_attr_mat_led7);
 
     ledMat_write_value(client, REG_BLINK_SETUP, 0xFF);
  
@@ -452,7 +459,14 @@ void ledMat_exit(void)
  
     ledMat_i2c_client = NULL;
  
-    device_remove_file(dev, &dev_attr_mat_led);
+    device_remove_file(dev, &dev_attr_mat_led0);
+    device_remove_file(dev, &dev_attr_mat_led1);
+    device_remove_file(dev, &dev_attr_mat_led2);
+    device_remove_file(dev, &dev_attr_mat_led3);
+    device_remove_file(dev, &dev_attr_mat_led4);
+    device_remove_file(dev, &dev_attr_mat_led5);
+    device_remove_file(dev, &dev_attr_mat_led6);
+    device_remove_file(dev, &dev_attr_mat_led7);
  
     device_destroy(ledMat_i2c_class, MKDEV(ledMat_i2c_major, 0));
     class_unregister(ledMat_i2c_class);
