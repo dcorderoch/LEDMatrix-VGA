@@ -47,7 +47,7 @@ display_help ( char ** argv )
 int
 main ( int argc, char ** argv )
 {
-  print_a ();
+  print_test ();
   if(argc>1 && argv[1][0] == '-')
     {
       switch (argv[1][1])
