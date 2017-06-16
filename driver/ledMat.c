@@ -1,8 +1,32 @@
 /*
  *
  * HT16K33 driver for an 8x8 LED Matrix
- *
- */
+ * 
+ * This driver is intended to be used with an Adafruit Mini 8x8 LED 
+   Matrix w/I2C Backpack connected to the I2C port located in the VGA 
+   connector.
+
+   It provides a easy interface to turn on and off each LED.
+
+
+Copyright (C) 2017  David Cordero Chavarría
+Copyright (C) 2017  Manuel Zumbado Corrales
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*/
+
 #define DEBUG 1
 
 #include <linux/init.h>
@@ -84,7 +108,7 @@ int ledMat_write_value(struct i2c_client *client, u8 reg, u16 value)
 static int ledMat_i2c_open(struct inode * inode, struct file *fp)
 {
    printk("%s: Attempt to open our device\n", __FUNCTION__);
-   /* Our driver only allows writing to our LED's */
+   // Only in write mode
    if ((fp->f_flags & O_ACCMODE) != O_WRONLY)
        return -EACCES;
  
@@ -95,8 +119,7 @@ static int ledMat_i2c_open(struct inode * inode, struct file *fp)
        return -EBUSY;
    }
  
-   /* Check if the client is already loaded
-    */
+   // Check if the client is already loaded
    if (ledMat_i2c_client == NULL)
        return -ENODEV;
  
@@ -119,7 +142,7 @@ static ssize_t ledMat_i2c_write(struct file * fp, const char __user * buf,
     int x, numwrite = 0;
     char * tmp;
  
-    /* We'll limit the number of bytes written out */
+    //Limit the number of bytes written
     if (count > 512)
         count = 512;
  
@@ -144,7 +167,7 @@ static const struct file_operations ledMat_i2c_fops = {
     .release = ledMat_i2c_close
 };
 
-//attribute exported via sysfs. 
+//attributes exported via sysfs. 
 static ssize_t set_mat_led0(struct device *dev, 
     struct device_attribute * devattr,
     const char * buf, 
@@ -365,33 +388,23 @@ int ledMat_init(void) {
     printk("ledMat_i2c: %s\n", __FUNCTION__);
 
  
-    /* Allocate the client's data here */
+    // Allocate client's data 
     data = devm_kzalloc(&client->dev, sizeof(struct ledMat_data), GFP_KERNEL);
     if(!data)
         return -ENOMEM;
  
-    /* Initialize client's data to default */
+    // Initialize client's data to default
     i2c_set_clientdata(client, data);
-    /* Initialize the mutex */
+    // Initialize mutex
     mutex_init(&data->update_lock);
  
-    /* If our driver requires additional data initialization
-     * we do it here. For our intents and purposes, we only 
-     * set the data->kind which is taken from the i2c_device_id.
-     **/
-    //data->someValue = id->driver_data;
- 
-    /* initialize our hardware */
+    // initialize hardware
     ledMat_init_client(client);
  
-    /* In our arbitrary hardware, we only have
-     * one instance of this existing on the i2c bus.
-     * Therefore we set the global pointer of this
-     * client.
-     */
+    //Global pointer to the client
     ledMat_i2c_client = client;
  
-    /* We now create our character device driver */
+    // We now create our character device driver
     ledMat_i2c_major = register_chrdev(0, DRIVER_NAME,
         &ledMat_i2c_fops);
     if (ledMat_i2c_major < 0)
@@ -420,7 +433,7 @@ int ledMat_init(void) {
         goto unreg_class;
     }
  
-    /* Initialize the mutex for /dev fops clients */
+    // Initialize the mutex for /dev fops clients 
     mutex_init(&ledMat_i2c_mutex);
  
  
@@ -451,7 +464,7 @@ out:
 
 }
 
-
+//Exit function called when driver stops or the device is removed.
 void ledMat_exit(void)
 {
 	struct device * dev = &ledMat_i2c_client->dev;
@@ -475,4 +488,4 @@ void ledMat_exit(void)
 }
 
 MODULE_DESCRIPTION("8x8 LED Matrix I2C Driver");
-MODULE_LICENSE("Dual BSD/GPL");/* License */
+MODULE_LICENSE("GPL2");/* License */
