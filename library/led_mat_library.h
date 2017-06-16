@@ -6,11 +6,6 @@
 #include <stdio.h>
 #endif /* STDIO */
 
-#ifndef FCNTL
-#define FCNTL
-#include <fcntl.h>
-#endif /* FCNTL */
-
 #ifndef INTTYPES
 #define INTTYPES
 #include <inttypes.h>
@@ -51,26 +46,6 @@
 #include <string.h>
 #endif /* STRING */
 
-#ifndef I2C_DEV
-#define I2C_DEV
-#include <linux/i2c-dev.h>
-#endif /* I2C_DEV */
-
-#ifndef IOCTL
-#define IOCTL
-#include <sys/ioctl.h>
-#endif /* IOCTL */
-
-#ifndef SYS_TYPES
-#define SYS_TYPES
-#include <sys/types.h>
-#endif /* SYS_TYPES */
-
-#ifndef SYS_STAT
-#define SYS_STAT
-#include <sys/stat.h>
-#endif /* SYS_STAT */
-
 #ifndef TIME
 #define TIME
 #include <time.h>
@@ -87,19 +62,13 @@ void
 wait( unsigned long milliseconds );
 
 void
-write_byte ( int * dev_fd, uint8_t dev_register, uint8_t data );
+write_byte ( FILE ** dev_fd, uint8_t data );
 
 void
-set_blink_off ( void );
+open_device ( FILE ** dev_fd, char * filename );
 
 void
-open_device ( int * dev_fd );
-
-void
-close_device ( int * dev_fd );
-
-void
-set_device_as_slave ( int * dev_fd );
+close_device ( FILE ** dev_fd );
 
 /* Display a symbol on the LED Matrix. */
 void
@@ -111,14 +80,6 @@ clear_led_mat ( void );
 
 void
 print_test ( void );
-
-/* Print 'a' on the LED Matrix. */
-void
-print_a ( void );
-
-/* Print a byte array on the LED Matrix. */
-void
-led_mat_led_array_on ( uint8_t * array_state, uint8_t length );
 
 /* High level abstract text print function, uses the previous functions
    to "print" characters in the LED Matrix. */
