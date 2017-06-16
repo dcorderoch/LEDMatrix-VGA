@@ -800,9 +800,9 @@ uint8_t * CHARS[CHAR_SET_LENGTH] =
 #endif /* CHARACTERS */
 
 char *
-convert(uint8_t *a)
+int_to_char_array ( uint8_t * int_num )
 {
-  int tmp = *a;
+  int tmp = *int_num;
   char * result = calloc ( 1, 16 );
 
   sprintf ( result, "%d", tmp );
@@ -812,7 +812,7 @@ convert(uint8_t *a)
 }
 
 void
-wait ( unsigned long milliseconds )
+milli_sleep ( unsigned long milliseconds )
 {
   unsigned long millisecs = milliseconds;
   struct timespec req = { 0 };
@@ -824,10 +824,10 @@ wait ( unsigned long milliseconds )
 }
 
 void
-write_byte ( FILE ** dev_fd, uint8_t data )
+write_to_led_matrix ( FILE ** dev_fd, uint8_t data )
 {
   uint8_t write_data = data;
-  char * data_string = convert ( &write_data );
+  char * data_string = int_to_char_array ( &write_data );
   fprintf ( *dev_fd, data_string );
   free ( data_string );
 }
@@ -867,10 +867,10 @@ display_symbol ( uint8_t * symbol_data, uint8_t length )
     printf ( "filename is:%s\n", FILENAMES[i] );
     open_device ( &led_mat_fd, FILENAMES[i] );
     printf ( "led_mat_fd is :%p\n", led_mat_fd );
-    write_byte ( &led_mat_fd, symbol_data[i]);
+    write_to_led_matrix ( &led_mat_fd, symbol_data[i]);
     close_device ( &led_mat_fd );
 
-    wait ( LED_ON_DELAY );
+    milli_sleep ( LED_ON_DELAY );
   }
 }
 
@@ -886,7 +886,7 @@ print_test ( void )
   int i;
   for ( i = 0; i < SYMBOL_LENGTH ; i++)
     {
-      char * tmp = convert ( &A[i] );
+      char * tmp = int_to_char_array ( &A[i] );
       printf ( "row is:%d as a number\n", A[i] );
       printf ( "row is:%s as a number\n", tmp );
       free ( tmp );
@@ -912,4 +912,280 @@ led_mat_print ( int argc, char ** argv )
       printf ( "%s ", argv[i] );
     }
   print_newline ();
+}
+
+void
+print_a( void )
+{
+  display_symbol ( A, SYMBOL_LENGTH );
+}
+
+void
+print_b( void )
+{
+  display_symbol ( B, SYMBOL_LENGTH );
+}
+
+void
+print_c( void )
+{
+  display_symbol ( C, SYMBOL_LENGTH );
+}
+
+void
+print_d( void )
+{
+  display_symbol ( D, SYMBOL_LENGTH );
+}
+
+void
+print_e( void )
+{
+  display_symbol ( E, SYMBOL_LENGTH );
+}
+
+void
+print_f( void )
+{
+  display_symbol ( F, SYMBOL_LENGTH );
+}
+
+void
+print_g( void )
+{
+  display_symbol ( G, SYMBOL_LENGTH );
+}
+
+void
+print_h( void )
+{
+  display_symbol ( H, SYMBOL_LENGTH );
+}
+
+void
+print_i( void )
+{
+  display_symbol ( I, SYMBOL_LENGTH );
+}
+
+void
+print_j( void )
+{
+  display_symbol ( J, SYMBOL_LENGTH );
+}
+
+void
+print_k( void )
+{
+  display_symbol ( K, SYMBOL_LENGTH );
+}
+
+void
+print_l( void )
+{
+  display_symbol ( L, SYMBOL_LENGTH );
+}
+
+void
+print_m( void )
+{
+  display_symbol ( M, SYMBOL_LENGTH );
+}
+
+void
+print_n( void )
+{
+  display_symbol ( N, SYMBOL_LENGTH );
+}
+
+void
+print_o( void )
+{
+  display_symbol ( O, SYMBOL_LENGTH );
+}
+
+void
+print_p( void )
+{
+  display_symbol ( P, SYMBOL_LENGTH );
+}
+
+void
+print_q( void )
+{
+  display_symbol ( Q, SYMBOL_LENGTH );
+}
+
+void
+print_r( void )
+{
+  display_symbol ( R, SYMBOL_LENGTH );
+}
+
+void
+print_s( void )
+{
+  display_symbol ( S, SYMBOL_LENGTH );
+}
+
+void
+print_t( void )
+{
+  display_symbol ( T, SYMBOL_LENGTH );
+}
+
+void
+print_u( void )
+{
+  display_symbol ( U, SYMBOL_LENGTH );
+}
+
+void
+print_v( void )
+{
+  display_symbol ( V, SYMBOL_LENGTH );
+}
+
+void
+print_w( void )
+{
+  display_symbol ( W, SYMBOL_LENGTH );
+}
+
+void
+print_x( void )
+{
+  display_symbol ( X, SYMBOL_LENGTH );
+}
+
+void
+print_y( void )
+{
+  display_symbol ( Y, SYMBOL_LENGTH );
+}
+
+void
+print_z( void )
+{
+  display_symbol ( Z, SYMBOL_LENGTH );
+}
+
+void
+print_1( void )
+{
+  display_symbol ( ONE, SYMBOL_LENGTH );
+}
+
+void
+print_2( void )
+{
+  display_symbol ( TWO, SYMBOL_LENGTH );
+}
+
+void
+print_3( void )
+{
+  display_symbol ( THREE, SYMBOL_LENGTH );
+}
+
+void
+print_4( void )
+{
+  display_symbol ( FOUR, SYMBOL_LENGTH );
+}
+
+void
+print_5( void )
+{
+  display_symbol ( FIVE, SYMBOL_LENGTH );
+}
+
+void
+print_6( void )
+{
+  display_symbol ( SIX, SYMBOL_LENGTH );
+}
+
+void
+print_7( void )
+{
+  display_symbol ( SEVEN, SYMBOL_LENGTH );
+}
+
+void
+print_8( void )
+{
+  display_symbol ( EIGHT, SYMBOL_LENGTH );
+}
+
+void
+print_9( void )
+{
+  display_symbol ( NINE, SYMBOL_LENGTH );
+}
+
+void
+print_0( void )
+{
+  display_symbol ( ZERO, SYMBOL_LENGTH );
+}
+
+void
+print_smile ( void )
+{
+  display_symbol ( SMILE, SYMBOL_LENGTH );
+}
+
+void
+print_frown ( void )
+{
+  display_symbol ( FROWN, SYMBOL_LENGTH );
+}
+
+void
+print_serious ( void )
+{
+  display_symbol ( SERIOUS, SYMBOL_LENGTH );
+}
+
+void
+print_heart ( void )
+{
+  display_symbol ( HEART, SYMBOL_LENGTH );
+}
+
+void
+print_arrow ( void )
+{
+  display_symbol ( ARROW, SYMBOL_LENGTH );
+}
+
+void
+print_dollar ( void )
+{
+  display_symbol ( DOLLAR, SYMBOL_LENGTH );
+}
+
+void
+print_note ( void )
+{
+  display_symbol ( NOTE, SYMBOL_LENGTH );
+}
+
+void
+print_mars ( void )
+{
+  display_symbol ( MARS, SYMBOL_LENGTH );
+}
+
+void
+print_venus ( void )
+{
+  display_symbol ( VENUS, SYMBOL_LENGTH );
+}
+
+void
+print_nomouth ( void )
+{
+  display_symbol ( NOMOUTH, SYMBOL_LENGTH );
 }
