@@ -802,19 +802,13 @@ uint8_t * CHARS[CHAR_SET_LENGTH] =
 char *
 convert(uint8_t *a)
 {
-  char* buffer2;
-  buffer2 = malloc(9);
-  if (!buffer2)
-    {
-      return NULL;
-    }
-  buffer2[8] = '\0';
-  int i;
-  for (i = 0; i < 8; i++)
-    {
-      buffer2[7 - i] = (((*a) >> i) & (0x01)) + '0';
-    }
-  return buffer2;
+  int tmp = *a;
+  char * result = calloc ( 1, 16 );
+
+  sprintf ( result, "%d", tmp );
+  printf ( "result is: %s\n", result );
+
+  return result;
 }
 
 void
@@ -892,8 +886,10 @@ print_test ( void )
   int i;
   for ( i = 0; i < SYMBOL_LENGTH ; i++)
     {
+      char * tmp = convert ( &A[i] );
       printf ( "row is:%d as a number\n", A[i] );
-      printf ( "row is:%s as a number\n", convert ( &A[i] ) );
+      printf ( "row is:%s as a number\n", tmp );
+      free ( tmp );
     }
   for ( i = 0; i < 3 ; i++ )
     {
