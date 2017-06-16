@@ -58,7 +58,7 @@
 
 /* uint8_t to char array conversion. */
 char *
-convert(uint8_t *a);
+convert(uint8_t * a);
 
 /* Wait a specified amount of milliseconds. */
 void
