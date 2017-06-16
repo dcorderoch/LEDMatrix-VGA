@@ -210,10 +210,12 @@ clear_led_mat ( void )
 void
 print_test ( void )
 {
-  display_symbol ( A, SYMBOL_LENGTH );
-  clear_led_mat ();
-  display_symbol ( B, SYMBOL_LENGTH );
-  clear_led_mat ();
+  int i = 0;
+  for ( ; i < 3 ; i++ )
+    {
+      display_symbol ( CHARS[i], SYMBOL_LENGTH );
+      clear_led_mat ();
+    }
 }
 
 void
