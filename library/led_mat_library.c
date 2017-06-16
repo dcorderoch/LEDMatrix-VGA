@@ -53,7 +53,7 @@ char * FILENAMES[F_NAME_LEN] =
 #endif /* DEV_FILENAMES */
 
 #ifndef LED_ON_DELAY
-#define LED_ON_DELAY 150
+#define LED_ON_DELAY 200
 #endif /* LED_ON_DELAY */
 
 #ifndef LED_MAT_ADDRESS
@@ -792,8 +792,8 @@ uint8_t * CHARS[CHAR_SET_LENGTH] =
 {
   A, B, C, D, E, F, G, H, I ,J, K, L, M,
   N, O, P, Q, R, S, T, U, V, W, X, Y, Z,
-  ONE, TWO, THREE, FOUR, FIVE,
-  SIX, SEVEN, EIGHT, NINE, ZERO,
+  ZERO, ONE, TWO, THREE, FOUR,
+  FIVE, SIX, SEVEN, EIGHT, NINE,
   SMILE, FROWN, SERIOUS, HEART, ARROW,
   DOLLAR, NOTE, MARS, VENUS, NOMOUTH
 };
@@ -806,7 +806,6 @@ int_to_char_array ( uint8_t * int_num )
   char * result = calloc ( 1, 16 );
 
   sprintf ( result, "%d", tmp );
-  printf ( "result is: %s\n", result );
 
   return result;
 }
@@ -863,10 +862,7 @@ display_symbol ( uint8_t * symbol_data, uint8_t length )
   int i;
   for ( i = 0 ; i < length ; i++ )
   {
-    printf ( "led_mat_fd is :%p\n", led_mat_fd );
-    printf ( "filename is:%s\n", FILENAMES[i] );
     open_device ( &led_mat_fd, FILENAMES[i] );
-    printf ( "led_mat_fd is :%p\n", led_mat_fd );
     write_to_led_matrix ( &led_mat_fd, symbol_data[i]);
     close_device ( &led_mat_fd );
 
@@ -881,53 +877,44 @@ clear_led_mat ( void )
 }
 
 void
-print_test ( void )
-{
-  int i;
-  for ( i = 0; i < SYMBOL_LENGTH ; i++)
-    {
-      char * tmp = int_to_char_array ( &A[i] );
-      printf ( "row is:%d as a number\n", A[i] );
-      printf ( "row is:%s as a number\n", tmp );
-      free ( tmp );
-    }
-  for ( i = 0; i < 3 ; i++ )
-    {
-      display_symbol ( X, SYMBOL_LENGTH );
-      clear_led_mat ();
-    }
-}
-
-void
 led_mat_print ( int argc, char ** argv )
 {
   int start = 2;
   int end = argc;
-  int i, j;
-
-  printf ( "the message was:\n" );
-
-  for ( i = start ; i < end ; i++ )
-    {
-      printf ( "%s ", argv[i] );
-    }
-  print_newline ();
-
-  if ( argc
+  int i, j, k;
   int word_len;
+  int symbol_index;
   for ( i = start ; i < end ; i++ )
     {
       word_len = strlen ( argv[i] );
       for ( j = 0 ; j < word_len ; j++ )
         {
-          uint8_t letter = argv[i][j];
-          printf ( "the letter of word number %d\n", i+1 );
-          printf ( "at position %d in the word is:%c\n", j+1, letter );
-          display_symbol ( CHARS[ 'a' - letter], SYMBOL_LENGTH );
+          k = argv[i][j] - '0';
+          if ( (k > 48) && (k < 75)) /* input is a letter */
+            {
+              symbol_index = k-49;
+            }
+          else if ( (k > 16) && (k < 28) ) /* input is an uppercase letter. */
+            {
+              symbol_index = k+19;
+            }
+          else if ( (k > -1) && (k < 10) ) /* input is a number */
+            {
+              symbol_index = k+26;
+            }
+          else
+            {
+              symbol_index = 37; /* input is incorrect, frown face as output */
+            }
+          display_symbol ( CHARS[symbol_index], SYMBOL_LENGTH );
+          clear_led_mat ();
+          milli_sleep ( 350 );
         }
-      wait ( 500 );
+      if ( i < end - 1 )
+      {
+        milli_sleep ( 1000 );
+      }
     }
-
 }
 
 void
