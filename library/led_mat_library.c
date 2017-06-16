@@ -6,42 +6,42 @@
 
 #ifndef DEV_FILENAME_0
 #define DEV_FILENAME_0
-char REG_0[F_NAME_LEN] = "/sys/bus/i2c/drivers/ledMatc/1-0070/mat_led0";
+char REG_0[F_NAME_LEN] = "/sys/bus/i2c/devices/ledMatc/1-0070/mat_led0";
 #endif /* DEV_FILENAME_0 */
 
 #ifndef DEV_FILENAME_1
 #define DEV_FILENAME_1
-char REG_1[F_NAME_LEN] = "/sys/bus/i2c/drivers/ledMatc/1-0070/mat_led1";
+char REG_1[F_NAME_LEN] = "/sys/bus/i2c/devices/ledMatc/1-0070/mat_led1";
 #endif /* DEV_FILENAME_1 */
 
 #ifndef DEV_FILENAME_2
 #define DEV_FILENAME_2
-char REG_2[F_NAME_LEN] = "/sys/bus/i2c/drivers/ledMatc/1-0070/mat_led2";
+char REG_2[F_NAME_LEN] = "/sys/bus/i2c/devices/ledMatc/1-0070/mat_led2";
 #endif /* DEV_FILENAME_2 */
 
 #ifndef DEV_FILENAME_3
 #define DEV_FILENAME_3
-char REG_3[F_NAME_LEN] = "/sys/bus/i2c/drivers/ledMatc/1-0070/mat_led3";
+char REG_3[F_NAME_LEN] = "/sys/bus/i2c/devices/ledMatc/1-0070/mat_led3";
 #endif /* DEV_FILENAME_3 */
 
 #ifndef DEV_FILENAME_4
 #define DEV_FILENAME_4
-char REG_4[F_NAME_LEN] = "/sys/bus/i2c/drivers/ledMatc/1-0070/mat_led4";
+char REG_4[F_NAME_LEN] = "/sys/bus/i2c/devices/ledMatc/1-0070/mat_led4";
 #endif /* DEV_FILENAME_4 */
 
 #ifndef DEV_FILENAME_5
 #define DEV_FILENAME_5
-char REG_5[F_NAME_LEN] = "/sys/bus/i2c/drivers/ledMatc/1-0070/mat_led5";
+char REG_5[F_NAME_LEN] = "/sys/bus/i2c/devices/ledMatc/1-0070/mat_led5";
 #endif /* DEV_FILENAME_5 */
 
 #ifndef DEV_FILENAME_6
 #define DEV_FILENAME_6
-char REG_6[F_NAME_LEN] = "/sys/bus/i2c/drivers/ledMatc/1-0070/mat_led6";
+char REG_6[F_NAME_LEN] = "/sys/bus/i2c/devices/ledMatc/1-0070/mat_led6";
 #endif /* DEV_FILENAME_6 */
 
 #ifndef DEV_FILENAME_7
 #define DEV_FILENAME_7
-char REG_7[F_NAME_LEN] = "/sys/bus/i2c/drivers/ledMatc/1-0070/mat_led7";
+char REG_7[F_NAME_LEN] = "/sys/bus/i2c/devices/ledMatc/1-0070/mat_led7";
 #endif /* DEV_FILENAME_7 */
 
 #ifndef DEV_FILENAMES
@@ -799,6 +799,24 @@ uint8_t * CHARS[CHAR_SET_LENGTH] =
 };
 #endif /* CHARACTERS */
 
+char *
+convert(uint8_t *a)
+{
+  char* buffer2;
+  buffer2 = malloc(9);
+  if (!buffer2)
+    {
+      return NULL;
+    }
+  buffer2[8] = '\0';
+  int i;
+  for (i = 0; i < 8; i++)
+    {
+      buffer2[7 - i] = (((*a) >> i) & (0x01)) + '0';
+    }
+  return buffer2;
+}
+
 void
 wait ( unsigned long milliseconds )
 {
@@ -814,16 +832,18 @@ wait ( unsigned long milliseconds )
 void
 write_byte ( FILE ** dev_fd, uint8_t data )
 {
-  char data_string[4] = { 0  };
-  sprintf ( data_string, "%d", data );
+  uint8_t write_data = data;
+  char * data_string = convert ( &write_data );
   fprintf ( *dev_fd, data_string );
+  free ( data_string );
 }
 
 void
 open_device ( FILE ** dev_fd, char * filename )
 {
   FILE * led_mat_fd = 0;
-  if ( (led_mat_fd = fopen ( filename, "w" )) != 0 )
+  led_mat_fd = fopen ( filename, "w" );
+  if ( !led_mat_fd )
     {
       printf ( "Failed to open the bus.\n" );
       exit ( EXIT_FAILURE );
@@ -849,7 +869,10 @@ display_symbol ( uint8_t * symbol_data, uint8_t length )
   int i;
   for ( i = 0 ; i < length ; i++ )
   {
+    printf ( "led_mat_fd is :%p\n", led_mat_fd );
+    printf ( "filename is:%s\n", FILENAMES[i] );
     open_device ( &led_mat_fd, FILENAMES[i] );
+    printf ( "led_mat_fd is :%p\n", led_mat_fd );
     write_byte ( &led_mat_fd, symbol_data[i]);
     close_device ( &led_mat_fd );
 
@@ -869,7 +892,7 @@ print_test ( void )
   int i = 0;
   for ( ; i < 3 ; i++ )
     {
-      display_symbol ( CHARS[i], SYMBOL_LENGTH );
+      display_symbol ( X, SYMBOL_LENGTH );
       clear_led_mat ();
     }
 }
