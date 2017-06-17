@@ -14,7 +14,7 @@
 
 .emoji_container {
     display: none;
-    width: 544px;
+    width: 90%;
     position: absolute;
     background-color: #fff;
     border: 1px solid #bfbfbf;
@@ -28,7 +28,7 @@
 }
 
 .emoji_content {
-    height: 277px;
+    height: 80%;
     overflow-y: auto;
     padding: 5px;
 }
