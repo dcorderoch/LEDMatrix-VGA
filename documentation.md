@@ -128,7 +128,7 @@ was required as an assingment for a course on Operating System Principles.
 The Tools used in the development of the driver include the GNU Compiler
 Collection's C language compiler, `gcc` for compiling the source code,
 Sublime Text as a text editor, GNU Make to automate the build process, Git
-for source version control, SSH to connect to the development machine,
+for source version control, SSH to connect to the target machine,
 and the Bourne Again Shell (bash) as a shell.
 
 
@@ -156,24 +156,32 @@ web browsers, because of both a lack of familiarity with PHP, which was the
 required language in the assignment, as well as familiarity with Javascript,
 JQuery, Bootstrap, and Node.js.
 
+It makes use of an emoji picker library in order to provide to the user an
+easy way to use the avaliable emoji set.
+
 - - - - - -
 ## Program Design
 - - - - - -
 
 ### Inner Workings and Examples
 
+The server provides an user friendly web interface for the user to write a message, select the desired emoji from the emoji picker and finnaly process and send the string to the server. The message is passed as a parameter to the wrapper, it is processed using the library and then displayed through the LED Matrix by writting values to the files created in the device tree when the driver is loaded in the system. 
+
 
 
 ### Communication between Components
 
+The Web interface communicates with the server by using Web API methods to send the message entered by the user in JSON format. This is easly developed with Express in the server side and JQuery in the client side.
 
+The message is get by the server from the JSON response and then it is passed as a parameter of the wrapper. 
 
 - - - - - -
 ## Use Instructions
 - - - - - -
 
 ### Requirements
-
+NodeJS 6.11 or newer.
+npm in order to install dependencies. 
 
 
 ### Set Up
