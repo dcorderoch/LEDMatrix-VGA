@@ -6,7 +6,7 @@
    Matrix w/I2C Backpack connected to the I2C port located in the VGA 
    connector.
 
-   It provides a easy interface to turn on and off each LED.
+   It provides an easy interface to turn on and off each LED.
 
 
 Copyright (C) 2017  David Cordero Chavarría
