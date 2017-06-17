@@ -165,15 +165,27 @@ easy way to use the avaliable emoji set.
 
 ### Inner Workings and Examples
 
-The server provides an user friendly web interface for the user to write a message, select the desired emoji from the emoji picker and finnaly process and send the string to the server. The message is passed as a parameter to the wrapper, it is processed using the library and then displayed through the LED Matrix by writting values to the files created in the device tree when the driver is loaded in the system. 
+The web application provides a simple interface for the user to write a
+message, select emoji (if desired) from the emoji picker and finaly process and
+send the string to the server.
+
+The message is passed as a parameter to the
+wrapper, it is processed using the library and then displayed through the LED
+Matrix by writting values to the files created in the device tree when the
+driver is loaded in the system.
 
 
 
 ### Communication between Components
 
-The Web interface communicates with the server by using Web API methods to send the message entered by the user in JSON format. This is easly developed with Express in the server side and JQuery in the client side.
+The web application front-end communicates with the web application back-end
+using web api methods to send the messages put in by the user to process them,
+this was easily developed in Express for the back-end, and JQuery for the
+front-end
 
-The message is get by the server from the JSON response and then it is passed as a parameter of the wrapper. 
+The message sent by the front-end is obtained in the back-end and sent to the
+library wrapper, which is the program that prints on the LED matrix by using
+the functions in the library to write to the file created by the driver
 
 - - - - - -
 ## Use Instructions
