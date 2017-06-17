@@ -342,6 +342,32 @@ is running, and using the port 8080, e.g. `http://192.168.0.31:8080/`
 
 ### Manuel Zumbado
 
+Add basic server 2017-06-05
+add option to show public/index.html 2017-06-12
+add main html page 2017-06-12
+move server.js to its own location 2017-06-12
+add option to show main page 2017-06-12
+add comments to code 2017-06-13
+add option to show received message 2017-06-13
+fix: json response 2017-06-13
+add base driver 2017-06-14
+add .gitignore 2017-06-14
+update driver 2017-06-15
+remove probe methods, change to explicit instantiation 2017-06-15
+fix error 2017-06-15
+add one file for each row of the matrix 2017-06-15
+fix error 2017-06-15
+refractor and comment code 2017-06-16
+fix typo 2017-06-16
+add emoji support 2017-06-16
+Add regex string replace functionality 2017-06-16
+add emoji lib files 2017-06-16
+add emoji lib files 2017-06-17
+include child_p to communicate with library wrapper 2017-06-17
+fix error 2017-06-17
+update emojis 2017-06-17
+add documentation 2017-06-17
+
 - - - - - -
 ## State of the Project
 - - - - - -
