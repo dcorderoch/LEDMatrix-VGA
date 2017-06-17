@@ -81,7 +81,28 @@ the necessary pins/connection lines for I2C communication.
 
 ### Hardware Drivers
 
+Device drivers take on a special role in the Linux kernel. They are distinct “black
+boxes” that make a particular piece of hardware respond to a well-defined internal
+programming interface; they hide completely the details of how the device works.
+User activities are performed by means of a set of standardized calls that are indepen-
+dent of the specific driver; mapping those calls to device-specific operations that act
+on real hardware is then the role of the device driver. This programming interface is
+such that drivers can be built separately from the rest of the kernel and “plugged in”
+at runtime when needed. This modularity makes Linux drivers relatively easy to write,
+to the point that there are now hundreds of them available. [1]
 
+To implement a driver for a character device, it must be programmed in the C programming
+language, as a module for the kernel, and a special Makfile with the assignment for
+
+```
+obj-m
+```
+which uses the kernel build system, and not the "vainilla" make build process.
+
+A few important things to keep in mind are:
+*   floating point numbers are not used in kernel programming
+*   testing kernel modules can be dangerous, so extreme caution is adviced, using a "sacrificial" computer to test modules on is a common practice
+*   the linux kernel changes very rapidly, so programming a module for one version may not work in the next, so it is recommended to build against the kernel version of interest, or to continually update the module should the device driver API change
 
 ### The LED MATRIX Project
 
@@ -158,3 +179,5 @@ the necessary pins/connection lines for I2C communication.
 - - - - - -
 ## References
 - - - - - -
+
+[1] Jonathan Corbet, Alessandro Rubini, and Greg Kroah-Hartman "Linux Device Drivers, 3rd ed."
