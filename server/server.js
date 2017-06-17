@@ -4,6 +4,7 @@ var express     = require('express');
 var app         = express();
 var bodyParser  = require('body-parser');
 var morgan		= require('morgan');
+var child_p     = require('child_process');
 
 
  //*****************
@@ -36,16 +37,16 @@ console.log('Starting the server on: http://localhost:' + port);
 var apiRoutes = express.Router();
 
 var mapStr = {
-   :a::"A",
-   :b::"B",
-   :c::"C",
-   :d::"D",
-   :e::"E",
-   :f::"F",
-   :g::"G",
-   :h::"H",
-   :i::"I",
-   :j::"J",
+   ':a:':"A",
+   ':b:':"B",
+   ':c:':"C",
+   ':d:':"D",
+   ':e:':"E",
+   ':f:':"F",
+   ':g:':"G",
+   ':h:':"H",
+   ':i:':"I",
+   ':j:':"J",
 };
 
 // POST method to send a string (POST http://localhost:8080)
