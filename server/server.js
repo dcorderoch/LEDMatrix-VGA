@@ -52,10 +52,11 @@ var mapStr = {
 // POST method to send a string (POST http://localhost:8080)
 apiRoutes.post('/message', function(req, res) {
   //child_p.execSync('call a program');
-  var re = /(:[a-j]:)/;
+  var re = /(:[a-j]:)/g;
   var resStr = req.body.message.toLowerCase();
   resStr = resStr.replace(re,function(matched){return mapStr[matched]});
-  child_p.execSync('../library/wrapper -p '+resStr);
+  console.log(resStr);
+  child_p.execSync('library/wrapper -p '+resStr);
   res.send(JSON.parse('{}'));
 });
 
