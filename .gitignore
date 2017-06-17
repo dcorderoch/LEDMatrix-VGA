@@ -1,0 +1,13 @@
+driver/.built-in.o.cmd
+driver/.ledMat.ko.cmd
+driver/.ledMat.mod.o.cmd
+driver/.ledMat.o.cmd
+driver/.tmp_versions/
+driver/Module.symvers
+driver/built-in.o
+driver/ledMat.ko
+driver/ledMat.mod.c
+driver/ledMat.mod.o
+driver/ledMat.o
+driver/modules.order
+server/node_modules
