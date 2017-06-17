@@ -154,7 +154,7 @@ The web application was programmed in HTML, JavaScript, and JQuery, with
 Twitter's Bootstrap to make the application work with both desktop and mobile
 web browsers, because of both a lack of familiarity with PHP, which was the
 required language in the assignment, as well as familiarity with Javascript,
-JQuery, Bootstrap, and Node.js.
+JQuery, Bootstrap, and Node.js with projects involving C programs.
 
 - - - - - -
 ## Program Design
@@ -174,16 +174,61 @@ JQuery, Bootstrap, and Node.js.
 
 ### Requirements
 
+A LED matrix, and the HT16K33 controller LED backpack by adafruit were used in
+the development of this project, though similar backpacks may provide similar
+functionality, the steps mentioned in this document are not guaranteed to work
+with other backpacks
+
+A VGA port was used in this project, but a DVI or HDMI port will most likely
+serve the same purpose
+
+Jumper cables we used to connect the components, though any copper cable is
+likely to work as well
+
+This project was developed and tested on a system running Linux Mint Debian
+Edition 2 "Betsy", though it should work on other versions of GNU/Linux,
+it's not guaranteed, and the authors take no responsibility should you choose
+to try to replicate what was obtained here
 
 
 ### Set Up
 
+*   Get a Computer with an x86 or x86_64 processor (a GB mini computer with a
+single core Intel Atom CPU was used), that also has a VGA port
+*   Get the HT16K33 and the LED matrix
+*   Install LDME 2 on the computer, and install the build-essential, and glib2.0-dev packages
+*   Install Node.js 6.x.x
+After setting the LED matrix on the backpack, as per adafruit's instructions (soldering is optional)
+*   Connect the pin slot marked as - to GND
+*   Connect the pin slot marked as + to +5VDC
+*   Connect the pin slot marked as D to SDA
+*   Connect the pin slot marked as C to SDC
 
+The VGA port has 15 pin slots, that look like this
+
+```
+.....
+ .....
+.....
+```
+
+The only pins that are needed for I2C communication are:
+*   GND (the top leftmost pin)
+*   +5VDC (the middle, second leftmost pin)
+*   SDC (the bottom leftmost pin)
+*   and SDA (the bottom, second from the right pin)
+
+
+#### AQUI FALTA PONER LAS LINEAS PARA COMPILAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 ### How To
 
-
-
+Once the kernel module is loaded, run the web application, by running in a shell
+in a terminal emulator window, the command
+```
+nodejs server.js
+```
+then access the web application through a web browser like Mozilla Firefox or Google Chrome
 - - - - - -
 ## Activities Log
 - - - - - -
@@ -200,13 +245,46 @@ JQuery, Bootstrap, and Node.js.
 
 ### Challenges faced on Development
 
+Programming and debugging kernel modules present the challenge of potentially
+crashing the module at best, and up to breaking a computer's operating system,
+so extreme care should be taken when loading kernel modules that contain
+functions one is not familiar with, initially during the development of this
+project, the module crashed and the computer had to be rebooted to completely
+clear the resources allocated by the module.
 
+Besides that, working with hardware presents its own risks, as a connection
+to the wrong pin can be as "harmless" as setting a memory register to the
+wrong value, or more serious damage, like burning components, or even render a
+computer unusable, as well as potentially having unhelpful documentation,
+datasheets with little usable information, or plain strange defaults (of which
+one was encountered, because the registers of the memory of the HT16K33 don't
+have a logical mapping to the LEDs on the matrix, though it may be because
+the same Micro Controller is used for different models of LED matrices).
+
+Ployglot programming presents its own set of challenges, as APIs aren't always
+well defined or documented for certain combinations of Languages,
+using functionality implemented in C from Javascript was an interesting
+but not easy task.
+
+And in general, software projects whose source code-bases get larger and
+larger as the complexity of the implemented version increases can become
+unmanagable if care is not taken to maintain the source code architecture.
 
 - - - - - -
 ## Conclusions and Recommendations
 - - - - - -
 
-
+Device Driver programming presents a fascinating, but challenging task, and
+its integration with other software components can be fun and rewarding,
+but a really large knowledgebase is needed in order to properly accomplish
+it, and this knowledge is not easy to acquire, as the kernel changes very
+rapidly, and documentation can become obsolete very quickly, as well as
+there being great differences between userspace application programming,
+and kernel programming, a good understanding of the requirements of any
+software, or non-software project can be the difference between a failed
+and a successful project, so all efforts on getting to understand the
+requirements, as well as desired results and restrictions is a great
+investment in the development of any project.
 
 - - - - - -
 ## References
