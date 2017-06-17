@@ -104,8 +104,14 @@ A few important things to keep in mind are:
 *   testing kernel modules can be dangerous, so extreme caution is adviced, using a "sacrificial" computer to test modules on is a common practice
 *   the linux kernel changes very rapidly, so programming a module for one version may not work in the next, so it is recommended to build against the kernel version of interest, or to continually update the module should the device driver API change
 
+
 ### The LED MATRIX Project
 
+This project consists in developing a driver for the Linux kernel, to use an
+HT16K33 controlled LED backpack (by adafruit), as a file, and call it from a
+library (programmed in the C programming language) that is used by a web
+application to send text and some other symbols (namely, some emoji) to display
+them in the LED matrix.
 
 
 - - - - - -
@@ -114,15 +120,41 @@ A few important things to keep in mind are:
 
 ### Driver
 
+The driver was programmed in the C programming language, as it is the standard
+when programming device drivers, it's the most well documented, it's the
+most familiar to the ones involed in the development of the project, and it
+was required as an assingment for a course on Operating System Principles.
+
+The Tools used in the development of the driver include the GNU Compiler
+Collection's C language compiler, `gcc` for compiling the source code,
+Sublime Text as a text editor, GNU Make to automate the build process, Git
+for source version control, SSH to connect to the development machine,
+and the Bourne Again Shell (bash) as a shell.
 
 
 ### Library
 
+The library was programmed in the C programming language, as it is the most
+familiar and comfortable to the ones involved in the development of the
+project, not to mention, it's very efficient in use of resources, and very
+fast to execute, which are important points in embedded device programming.
+
+The tools used in the development of the library include the GNU Compiler
+Collection's C language compiler, `gcc` for compiling the source code,
+Vi IMproved (Vim) as a text editor, GNU Make to automate the build process,
+Git for source version control, SSH to connect to the development machine,
+ack to search the source code once it reached a few hundred lines,
+ZSH as a shell, and The Terminal Multplexer (Tmux) to manage several virtual
+terminal emulators to run Git, SSH. Vim, ack, and Make simultaneously.
 
 
 ### Web Application
 
-
+The web application was programmed in HTML, JavaScript, and JQuery, with
+Twitter's Bootstrap to make the application work with both desktop and mobile
+web browsers, because of both a lack of familiarity with PHP, which was the
+required language in the assignment, as well as familiarity with Javascript,
+JQuery, Bootstrap, and Node.js.
 
 - - - - - -
 ## Program Design
