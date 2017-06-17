@@ -200,6 +200,8 @@ Edition 2 "Betsy", though it should work on other versions of GNU/Linux,
 it's not guaranteed, and the authors take no responsibility should you choose
 to try to replicate what was obtained here
 
+Node.js 6.11 or newer is required to install the dependencies of the web application, as well as to run it.
+
 
 ### Set Up
 
